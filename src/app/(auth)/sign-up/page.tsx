@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { trpc } from "@/trpc/client";
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,10 +28,15 @@ const Page: React.FC = () => {
     resolver: zodResolver(AuthCredentialsValidator),
   });
 
+  const { mutate: createPayloadUser, isLoading: isPayloadUserPending } =
+    trpc.auth.createPayloadUser.useMutation();
+
   const onSubmit: SubmitHandler<TAuthCredentialsValidator> = ({
     email,
     password,
-  }: TAuthCredentialsValidator) => {};
+  }: TAuthCredentialsValidator) => {
+    createPayloadUser({ email, password });
+  };
 
   return (
     <>
@@ -74,11 +80,12 @@ const Page: React.FC = () => {
                     className={cn({
                       "focus-visible:ring-red-500": errors.password,
                     })}
+                    type="password"
                     placeholder="Password"
                   />
                 </div>
 
-                <Button>Sign up</Button>
+                <Button isLoading={isPayloadUserPending}>Sign up</Button>
               </div>
             </form>
           </div>
