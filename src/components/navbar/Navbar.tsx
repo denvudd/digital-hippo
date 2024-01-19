@@ -1,8 +1,12 @@
 import React from "react";
+
 import MaxWidthWrapper from "../MaxWidthWrapper";
 import Link from "next/link";
-import { Icons } from "../ui/Icons";
 import NavbarList from "./NavbarList";
+import Cart from "../Cart";
+import { Icons } from "../ui/Icons";
+
+import { buttonVariants } from "../ui/Button";
 
 const Navbar: React.FC = () => {
   const user = null;
@@ -26,7 +30,45 @@ const Navbar: React.FC = () => {
               </div>
 
               <div className="ml-auto flex items-center">
-                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6"></div>
+                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                  {user ? null : (
+                    <Link
+                      href="/sign-in"
+                      className={buttonVariants({ variant: "ghost" })}
+                    >
+                      Sign in
+                    </Link>
+                  )}
+
+                  {user ? null : (
+                    <span className="h-6 w-px bg-gray-200" aria-hidden />
+                  )}
+
+                  {user ? (
+                    <p></p>
+                  ) : (
+                    <Link
+                      href="/sign-up"
+                      className={buttonVariants({ variant: "ghost" })}
+                    >
+                      Create account
+                    </Link>
+                  )}
+
+                  {user ? (
+                    <span className="h-6 w-px bg-gray-200" aria-hidden />
+                  ) : null}
+
+                  {user ? null : (
+                    <div className="flex lg:ml-6">
+                      <span className="h-6 w-px bg-gray-200" aria-hidden />{" "}
+                    </div>
+                  )}
+
+                  <div className="ml-4 flow-root lg:ml-6">
+                    <Cart />
+                  </div>
+                </div>
               </div>
             </div>
           </div>

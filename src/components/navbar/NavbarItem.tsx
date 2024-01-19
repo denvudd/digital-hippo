@@ -60,7 +60,7 @@ const NavbarItem: React.FC<NavbarItemProps> = ({
                       className="group relative text-base sm:text-sm"
                       key={child.name}
                     >
-                      <div className="relative aspect-video overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
+                      <div className="relative transition-opacity aspect-video overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
                         <Image
                           src={child.image}
                           alt="Product category"

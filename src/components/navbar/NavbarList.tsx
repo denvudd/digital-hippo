@@ -2,8 +2,9 @@
 
 import React from "react";
 import NavbarItem from "./NavbarItem";
-import { PRODUCT_CATEGORIES } from "@/config";
+
 import { useOnClickOutside } from "@/hooks/use-on-click-outside";
+import { PRODUCT_CATEGORIES } from "@/config";
 
 const NavbarList: React.FC = () => {
   const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
