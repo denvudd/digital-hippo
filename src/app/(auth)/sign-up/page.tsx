@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { trpc } from "@/trpc/client";
+import { useRouter } from "next/navigation";
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,13 +14,16 @@ import { Label } from "@/components/ui/Label";
 import { Button, buttonVariants } from "@/components/ui/Button";
 import { ArrowRight } from "lucide-react";
 
+import { toast } from "sonner";
 import {
   AuthCredentialsValidator,
   type TAuthCredentialsValidator,
 } from "@/lib/validators/auth-credentials";
 import { cn } from "@/lib/utils";
+import { ZodError } from "zod";
 
 const Page: React.FC = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -29,7 +33,27 @@ const Page: React.FC = () => {
   });
 
   const { mutate: createPayloadUser, isLoading: isPayloadUserPending } =
-    trpc.auth.createPayloadUser.useMutation();
+    trpc.auth.createPayloadUser.useMutation({
+      onSuccess: ({ sentToEmail }) => {
+        toast.success(`Verification email sent to ${sentToEmail}.`);
+        router.push(`/verify-email?recipient=${sentToEmail}`);
+      },
+      onError: (error) => {
+        if (error.data?.code === "CONFLICT") {
+          toast.error("This email is already in use. Sign in instead?");
+
+          return;
+        }
+
+        if (error instanceof ZodError) {
+          toast.error(error.issues[0].message);
+
+          return;
+        }
+
+        toast.error("Something went wrong. Please try again.");
+      },
+    });
 
   const onSubmit: SubmitHandler<TAuthCredentialsValidator> = ({
     email,
