@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { cookies } from "next/headers";
 
-import MaxWidthWrapper from "../MaxWidthWrapper";
+import MaxWidthWrapper from "../ui/MaxWidthWrapper";
 import NavbarList from "./NavbarList";
 import UserAccountNav from "./UserAccountNav";
 import Cart from "../Cart";
