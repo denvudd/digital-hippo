@@ -1,15 +1,19 @@
 import React from "react";
+import Link from "next/link";
+import { cookies } from "next/headers";
 
 import MaxWidthWrapper from "../MaxWidthWrapper";
-import Link from "next/link";
 import NavbarList from "./NavbarList";
+import UserAccountNav from "./UserAccountNav";
 import Cart from "../Cart";
 import { Icons } from "../ui/Icons";
 
 import { buttonVariants } from "../ui/Button";
+import { getServerSideUser } from "@/lib/payload-utils";
 
-const Navbar: React.FC = () => {
-  const user = null;
+const Navbar: React.FC = async () => {
+  const nextCookies = cookies();
+  const { user } = await getServerSideUser(nextCookies);
 
   return (
     <div className="bg-white sticky z-50 top-0 inset-x-0 h-16">
@@ -45,7 +49,7 @@ const Navbar: React.FC = () => {
                   )}
 
                   {user ? (
-                    <p></p>
+                    <UserAccountNav user={user} />
                   ) : (
                     <Link
                       href="/sign-up"
