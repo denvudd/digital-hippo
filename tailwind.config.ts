@@ -24,6 +24,10 @@ const config = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        fontFamily: {
+          sans: ['var(--font-geist-sans)'],
+          mono: ['var(--font-geist-mono)'],
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",

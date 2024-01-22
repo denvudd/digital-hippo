@@ -10,7 +10,6 @@ import AddToCartButton from "@/components/AddToCartButton";
 import { Check, Shield } from "lucide-react";
 
 import { PRODUCT_BREADCRUMBS } from "./breadcrumbs";
-import { PRODUCT_CATEGORIES } from "@/config";
 import { formatPrice, getProductLabel } from "@/lib/utils";
 
 interface PageProps {
