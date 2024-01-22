@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 import MaxWidthWrapper from "../ui/MaxWidthWrapper";
 import NavbarList from "./NavbarList";
 import UserAccountNav from "./UserAccountNav";
-import Cart from "../Cart";
+import Cart from "../cart/Cart";
 import { Icons } from "../ui/Icons";
 
 import { buttonVariants } from "../ui/Button";

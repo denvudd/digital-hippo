@@ -11,7 +11,7 @@ import { Check, Shield } from "lucide-react";
 
 import { PRODUCT_BREADCRUMBS } from "./breadcrumbs";
 import { PRODUCT_CATEGORIES } from "@/config";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, getProductLabel } from "@/lib/utils";
 
 interface PageProps {
   params: {
@@ -40,9 +40,7 @@ const Page: React.FC<PageProps> = async ({ params }) => {
 
   if (!product) return notFound();
 
-  const label = PRODUCT_CATEGORIES.find(
-    ({ value }) => value === product.category
-  )?.label;
+  const label = getProductLabel(product.category);
   const formattedUrls = product?.images
     .map(({ image }) => (typeof image === "string" ? image : image.url))
     .filter(Boolean) as string[];
@@ -88,7 +86,7 @@ const Page: React.FC<PageProps> = async ({ params }) => {
             </section>
           </div>
 
-          <div className="mt-10 lg:col-start-2 lg:row-start-2 lg:mt-0 lg:self-center">
+          <div className="mt-10 lg:col-start-2 lg:row-span-2 lg:mt-0 lg:self-center">
             <div className="aspect-square rounded-lg">
               <ImageSlider urls={formattedUrls} />
             </div>
@@ -97,7 +95,7 @@ const Page: React.FC<PageProps> = async ({ params }) => {
           <div className="mt-10 lg:col-start-1 lg:row-start-2 lg:max-w-lg lg:self-start">
             <div>
               <div className="mt-10">
-                <AddToCartButton />
+                <AddToCartButton product={product} />
               </div>
               <div className="mt-6 text-center">
                 <div className="group inline-flex text-sm text-medium">

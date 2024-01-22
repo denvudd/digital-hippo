@@ -1,3 +1,4 @@
+import { PRODUCT_CATEGORIES } from "@/config";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -22,4 +23,8 @@ export function formatPrice(
     notation,
     maximumFractionDigits: 2,
   }).format(numericPrice);
+}
+
+export function getProductLabel(category: "ui_kits" | "icons") {
+  return PRODUCT_CATEGORIES.find(({ value }) => value === category)?.label;
 }

@@ -1,10 +1,10 @@
 import React from "react";
-import { type Product } from "@/payload-types";
-import ProductPlaceholder from "./ProductPlaceholder";
 import Link from "next/link";
-import { cn, formatPrice } from "@/lib/utils";
-import { PRODUCT_CATEGORIES } from "@/config";
+
+import ProductPlaceholder from "./ProductPlaceholder";
 import ImageSlider from "../ui/ImageSlider";
+import { type Product } from "@/payload-types";
+import { cn, formatPrice, getProductLabel } from "@/lib/utils";
 
 interface ProductListingProps {
   product: Product | null;
@@ -13,9 +13,6 @@ interface ProductListingProps {
 
 const ProductListing: React.FC<ProductListingProps> = ({ product, index }) => {
   const [isVisible, setIsVisilbe] = React.useState<boolean>(false);
-  const label = PRODUCT_CATEGORIES.find(
-    ({ value }) => value === product?.category
-  )?.label;
 
   const formattedUrls = product?.images
     .map(({ image }) => (typeof image === "string" ? image : image.url))
@@ -30,6 +27,8 @@ const ProductListing: React.FC<ProductListingProps> = ({ product, index }) => {
   }, [index]);
 
   if (!product || !isVisible) return <ProductPlaceholder />;
+
+  const label = getProductLabel(product.category);
 
   if (isVisible && product) {
     return (

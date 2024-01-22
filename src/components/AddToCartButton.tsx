@@ -2,10 +2,15 @@
 
 import React from "react";
 import { Button } from "./ui/Button";
+import { type Product } from "@/payload-types";
+import { useCart } from "@/hooks/use-cart";
 
-interface AddToCartButtonProps {}
+interface AddToCartButtonProps {
+  product: Product;
+}
 
-const AddToCartButton: React.FC<AddToCartButtonProps> = ({}) => {
+const AddToCartButton: React.FC<AddToCartButtonProps> = ({ product }) => {
+  const { addItems } = useCart();
   const [isSuccess, setIsSuccess] = React.useState<boolean>(false);
 
   React.useEffect(() => {
@@ -16,8 +21,13 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({}) => {
     return () => clearTimeout(timeout);
   }, [isSuccess]);
 
+  const handleAddToCart = () => {
+    addItems(product);
+    setIsSuccess(true);
+  };
+
   return (
-    <Button onClick={() => setIsSuccess(true)} size="lg" className="w-full">
+    <Button onClick={handleAddToCart} size="lg" className="w-full">
       {isSuccess ? "Added!" : "Add to cart"}
     </Button>
   );
