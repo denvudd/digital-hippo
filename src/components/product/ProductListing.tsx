@@ -4,6 +4,7 @@ import ProductPlaceholder from "./ProductPlaceholder";
 import Link from "next/link";
 import { cn, formatPrice } from "@/lib/utils";
 import { PRODUCT_CATEGORIES } from "@/config";
+import ImageSlider from "../ui/ImageSlider";
 
 interface ProductListingProps {
   product: Product | null;
@@ -15,6 +16,10 @@ const ProductListing: React.FC<ProductListingProps> = ({ product, index }) => {
   const label = PRODUCT_CATEGORIES.find(
     ({ value }) => value === product?.category
   )?.label;
+
+  const formattedUrls = product?.images
+    .map(({ image }) => (typeof image === "string" ? image : image.url))
+    .filter(Boolean) as string[];
 
   React.useEffect(() => {
     const timer = setTimeout(() => {
@@ -35,7 +40,7 @@ const ProductListing: React.FC<ProductListingProps> = ({ product, index }) => {
         })}
       >
         <div className="flex flex-col w-full">
-          <ImageSlider />
+          <ImageSlider urls={formattedUrls} />
           <h3 className="mt-4 font-medium text-sm text-gray-700">
             {product.name}
           </h3>
