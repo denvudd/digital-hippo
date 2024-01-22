@@ -1,6 +1,8 @@
 import Link from "next/link";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import ProductReel from "@/components/product/ProductReel";
 import { Button, buttonVariants } from "@/components/ui/Button";
+
 import { PERKS } from "./perks";
 
 export default function Home() {
@@ -24,7 +26,11 @@ export default function Home() {
           </div>
         </div>
 
-        {/* TODO: List products */}
+        <ProductReel
+          query={{ sort: "desc", limit: 4 }}
+          title="Brand new"
+          href="/products"
+        />
       </MaxWidthWrapper>
 
       <section className="border-t border-gray-200 bg-gray-50">
