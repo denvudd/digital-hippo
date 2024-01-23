@@ -1,4 +1,5 @@
 import express from "express";
+import nextBuild from "next/dist/build";
 import * as trpcExpress from "@trpc/server/adapters/express";
 import bodyParser from "body-parser";
 
@@ -8,9 +9,10 @@ import { getPayloadClient } from "./get-payload";
 import { nextApp, nextHandler } from "./next-utils";
 import { inferAsyncReturnType } from "@trpc/server";
 import { type IncomingMessage } from "http";
+import path from "path";
 
 const app = express();
-const port = Number(process.env.PORT) || 3000;
+const PORT = Number(process.env.PORT) || 3000;
 
 const createContext = ({
   req,
@@ -41,6 +43,19 @@ const start = async () => {
     },
   });
 
+  if (process.env.NEXT_BUILD) {
+    app.listen(PORT, async () => {
+      payload.logger.info("Next.js is building for production");
+
+      // @ts-expect-error
+      await nextBuild(path.join(__dirname, "../"));
+
+      process.exit();
+    });
+
+    return;
+  }
+
   app.use(
     "/api/trpc",
     trpcExpress.createExpressMiddleware({
@@ -53,7 +68,7 @@ const start = async () => {
   nextApp.prepare().then(() => {
     payload.logger.info("Next.js started");
 
-    app.listen(port, async () => {
+    app.listen(PORT, async () => {
       payload.logger.info(
         `Next.js App URL ${process.env.NEXT_PUBLIC_SERVER_URL}`
       );

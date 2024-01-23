@@ -1,4 +1,4 @@
-import { PRODUCT_CATEGORIES } from "@/config";
+import { PRODUCT_CATEGORIES } from "../config";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 

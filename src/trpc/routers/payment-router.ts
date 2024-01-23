@@ -5,7 +5,7 @@ import { getPayloadClient } from "../../get-payload";
 
 import { stripe } from "../../lib/stripe";
 import type Stripe from "stripe";
-import { PollOrderStatusValidator } from "@/lib/validators/poll-order-status";
+import { PollOrderStatusValidator } from "../../lib/validators/poll-order-status";
 
 export const paymentRouter = router({
   createSession: privateProcedure
