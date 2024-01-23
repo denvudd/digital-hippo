@@ -6,5 +6,6 @@ namespace NodeJS {
     RESEND_API_KEY: string;
     STRIPE_SECRET_KEY: string;
     NEXT_BUILD: string;
+    STRIPE_WEBHOOK_SECRET: string;
   }
 }
