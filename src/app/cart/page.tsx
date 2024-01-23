@@ -10,16 +10,28 @@ import { Check, Loader2, X } from "lucide-react";
 
 import { FEE } from "@/config";
 import { cn, formatPrice, getProductLabel } from "@/lib/utils";
+import { trpc } from "@/trpc/client";
+import { useRouter } from "next/navigation";
 
 interface PageProps {}
 
 const Page: React.FC<PageProps> = ({}) => {
+  const router = useRouter();
   const { items, total, removeItem } = useCart();
   const [isMounted, setIsMounted] = React.useState<boolean>(false);
+
+  const { mutate: createCheckoutSession, isLoading: isCheckoutSessionLoading } =
+    trpc.payment.createSession.useMutation({
+      onSuccess: ({ url }) => {
+        if (url) router.push(url);
+      },
+    });
 
   React.useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  const productsIds = items.map(({ product }) => product.id);
 
   return (
     <div className="bg-white">
@@ -175,7 +187,13 @@ const Page: React.FC<PageProps> = ({}) => {
               </div>
 
               <div className="mt-6">
-                <Button isLoading={!isMounted} className="w-full" size="lg">
+                <Button
+                  isLoading={isCheckoutSessionLoading}
+                  disabled={!items.length || isCheckoutSessionLoading}
+                  onClick={() => createCheckoutSession({ productsIds })}
+                  className="w-full"
+                  size="lg"
+                >
                   Checkout
                 </Button>
               </div>

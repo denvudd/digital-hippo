@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { authRouter } from "./auth-router";
+import { authRouter } from "./routers/auth-router";
 import { publicProcedure, router } from "./trpc";
 import { ProductsQueryValidator } from "../lib/validators/query";
 import { getPayloadClient } from "../get-payload";
-import { paymentRouter } from "./payment.router";
+import { paymentRouter } from "./routers/payment-router";
 
 export const appRouter = router({
   auth: authRouter,
