@@ -5,14 +5,14 @@ import Link from "next/link";
 
 import ProductListing from "./ProductListing";
 import { trpc } from "@/trpc/client";
-import { TQueryValidator } from "@/lib/validators/query";
+import { TProductsQueryValidator } from "@/lib/validators/query";
 import { type Product } from "@/payload-types";
 
 interface ProductReelProps {
   title: string;
   subtitle?: string;
   href?: string;
-  query: TQueryValidator;
+  query: TProductsQueryValidator;
 }
 
 const FALLBACK_LIMIT = 4;
