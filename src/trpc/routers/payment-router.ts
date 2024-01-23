@@ -1,10 +1,11 @@
-import { privateProcedure, router } from "../trpc";
+import { privateProcedure, publicProcedure, router } from "../trpc";
 import { PaymentValidator } from "../../lib/validators/payment";
 import { TRPCError } from "@trpc/server";
 import { getPayloadClient } from "../../get-payload";
 
 import { stripe } from "../../lib/stripe";
 import type Stripe from "stripe";
+import { PollOrderStatusValidator } from "@/lib/validators/poll-order-status";
 
 export const paymentRouter = router({
   createSession: privateProcedure
@@ -15,7 +16,10 @@ export const paymentRouter = router({
       const payload = await getPayloadClient();
 
       if (!productsIds.length) {
-        throw new TRPCError({ code: "BAD_REQUEST", message: "BECAUSE PRODUCTS IDS" });
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "BECAUSE PRODUCTS IDS",
+        });
       }
 
       const { docs: products } = await payload.find({
@@ -84,5 +88,28 @@ export const paymentRouter = router({
 
         return { url: null };
       }
+    }),
+  pollOrderStatus: privateProcedure
+    .input(PollOrderStatusValidator)
+    .query(async ({ input }) => {
+      const { orderId } = input;
+      const payload = await getPayloadClient();
+
+      const { docs: orders } = await payload.find({
+        collection: "orders",
+        where: {
+          id: {
+            equals: orderId,
+          },
+        },
+      });
+
+      if (!orders.length) {
+        throw new TRPCError({ code: "NOT_FOUND" });
+      }
+
+      const [order] = orders;
+
+      return { isPaid: order._isPaid };
     }),
 });
