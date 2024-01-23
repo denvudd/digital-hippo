@@ -2,8 +2,10 @@ import express from "express";
 import { stripe } from "./lib/stripe";
 import { getPayloadClient } from "./get-payload";
 import { Resend } from "resend";
-
 import type Stripe from "stripe";
+
+import { ReceiptEmailHtml } from "./components/emails/ReceiptEmail";
+
 import { type WebhookRequest } from "./server";
 import { type Product } from "./payload-types";
 

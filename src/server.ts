@@ -3,6 +3,7 @@ import * as trpcExpress from "@trpc/server/adapters/express";
 import bodyParser from "body-parser";
 
 import { appRouter } from "./trpc";
+import { stripeWebhookHandler } from "./webhooks";
 import { getPayloadClient } from "./get-payload";
 import { nextApp, nextHandler } from "./next-utils";
 import { inferAsyncReturnType } from "@trpc/server";
@@ -29,7 +30,7 @@ const start = async () => {
     },
   });
 
-  app.post("/api/webhooks/stripe", webhookMiddleware, stripeWebhookHandler)
+  app.post("/api/webhooks/stripe", webhookMiddleware, stripeWebhookHandler);
 
   const payload = await getPayloadClient({
     initOptions: {
