@@ -18,18 +18,17 @@ import { Separator } from "../ui/Separator";
 import { ScrollArea } from "../ui/ScrollArea";
 import CartItem from "./CartItem";
 
+import { FEE } from "@/config";
 import { buttonVariants } from "../ui/Button";
 import { formatPrice } from "@/lib/utils";
 
 interface CartProps {}
 
 const Cart: React.FC<CartProps> = ({}) => {
-  const { items } = useCart();
+  const { items, total } = useCart();
   const [isMounted, setIsMounted] = React.useState<boolean>(false);
 
-  const total = items.reduce((total, { product }) => total + product.price, 0);
   const itemsCount = items.length;
-  const fee = 1;
 
   React.useEffect(() => {
     setIsMounted(true);
@@ -70,7 +69,7 @@ const Cart: React.FC<CartProps> = ({}) => {
                 </div>
                 <div className="flex">
                   <span className="flex-1">Transaction Fee</span>
-                  <span>{formatPrice(fee)}</span>
+                  <span>{formatPrice(FEE)}</span>
                 </div>
                 <div className="flex">
                   <span className="flex-1">Total</span>

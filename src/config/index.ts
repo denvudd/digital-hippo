@@ -63,3 +63,5 @@ export const PRODUCT_CATEGORIES: ProductCategories = [
     ],
   },
 ];
+
+export const FEE = 1;
