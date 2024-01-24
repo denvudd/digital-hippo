@@ -1,7 +1,10 @@
-import { BeforeChangeHook } from "payload/dist/collections/config/types";
+import {
+  AfterChangeHook,
+  BeforeChangeHook,
+} from "payload/dist/collections/config/types";
 import { PRODUCT_CATEGORIES } from "../../config";
-import { CollectionConfig } from "payload/types";
-import { Product } from "../../payload-types";
+import { Access, CollectionConfig } from "payload/types";
+import { Product, User } from "../../payload-types";
 import { stripe } from "../../lib/stripe";
 
 const addUser: BeforeChangeHook<Product> = async ({ req, data }) => {
@@ -10,7 +13,10 @@ const addUser: BeforeChangeHook<Product> = async ({ req, data }) => {
   return { ...data, user: user.id };
 };
 
-const createOrUpdateStripeProduct: BeforeChangeHook<Product> = async ({ data, operation }) => {
+const createOrUpdateStripeProduct: BeforeChangeHook<Product> = async ({
+  data,
+  operation,
+}) => {
   if (operation === "create") {
     const definedData = data as Product;
 
@@ -47,14 +53,80 @@ const createOrUpdateStripeProduct: BeforeChangeHook<Product> = async ({ data, op
   }
 };
 
+const syncUser: AfterChangeHook<Product> = async ({ req, doc }) => {
+  const fullUser = await req.payload.findByID({
+    collection: "users",
+    id: req.user.id,
+  });
+
+  if (fullUser && typeof fullUser === "object") {
+    const { products } = fullUser;
+
+    const allIds = [
+      ...(products?.map((product) =>
+        typeof product === "object" ? product.id : product
+      ) || []),
+    ];
+
+    const createdProductIds = allIds.filter(
+      (id, index) => allIds.indexOf(id) === index
+    );
+
+    const productsToUpdate = [...createdProductIds, doc.id];
+
+    await req.payload.update({
+      collection: "users",
+      id: fullUser.id,
+      data: {
+        products: productsToUpdate,
+      },
+    });
+  }
+};
+
+const isAdminOrHasAccess =
+  (): Access =>
+  ({ req: { user: _user } }) => {
+    const user = _user as User | undefined;
+
+    if (!user) return false;
+    if (user.role === "admin") return true;
+
+    const userProductsIds = (user.products || []).reduce<string[]>(
+      (acc, product) => {
+        if (!product) return acc;
+
+        if (typeof product === "string") {
+          acc.push(product);
+        } else {
+          acc.push(product.id);
+        }
+
+        return acc;
+      },
+      []
+    );
+
+    return {
+      id: {
+        in: userProductsIds,
+      },
+    };
+  };
+
 export const Products: CollectionConfig = {
   slug: "products",
   admin: {
     useAsTitle: "name",
   },
-  access: {},
+  access: {
+    read: isAdminOrHasAccess(),
+    update: isAdminOrHasAccess(),
+    delete: isAdminOrHasAccess(),
+  },
   hooks: {
     beforeChange: [addUser, createOrUpdateStripeProduct],
+    afterChange: [syncUser],
   },
   fields: [
     {
