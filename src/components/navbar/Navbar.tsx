@@ -3,6 +3,7 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 
 import MaxWidthWrapper from "../ui/MaxWidthWrapper";
+import MobileNavbar from "./MobileNavbar";
 import NavbarList from "./NavbarList";
 import UserAccountNav from "./UserAccountNav";
 import Cart from "../cart/Cart";
@@ -21,7 +22,7 @@ const Navbar: React.FC = async () => {
         <MaxWidthWrapper>
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center">
-              {/* TODO: Mobile nav */}
+              <MobileNavbar />
 
               <div className="ml-4 flex lg:ml-0">
                 <Link href="/">

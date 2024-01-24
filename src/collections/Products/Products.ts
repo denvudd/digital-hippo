@@ -1,6 +1,6 @@
 import {
-  AfterChangeHook,
-  BeforeChangeHook,
+  type AfterChangeHook,
+  type BeforeChangeHook,
 } from "payload/dist/collections/config/types";
 import { PRODUCT_CATEGORIES } from "../../config";
 import { Access, CollectionConfig } from "payload/types";
