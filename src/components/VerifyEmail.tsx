@@ -21,8 +21,6 @@ const VerifyEmail: React.FC<VerifyEmailProps> = ({ token }) => {
     token,
   });
 
-  console.log(verifyData);
-
   if (isError) {
     return (
       <div className="flex flex-col items-center gap-2">

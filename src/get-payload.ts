@@ -10,7 +10,7 @@ dotenv.config({
 });
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.resend.com",
+  host: "send.kitu",
   secure: true,
   port: 465,
   auth: {

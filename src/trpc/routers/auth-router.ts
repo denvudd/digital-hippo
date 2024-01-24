@@ -23,13 +23,31 @@ export const authRouter = router({
 
       if (users.length !== 0) throw new TRPCError({ code: "CONFLICT" });
 
-      await payload.create({
+      const createdUser = await payload.create({
         collection: "users",
         data: {
           email,
           password,
           role: "user",
         },
+      });
+
+      const { docs: createdUsers } = await payload.find({
+        collection: "users",
+        where: {
+          id: {
+            equals: createdUser.id,
+          },
+        },
+        showHiddenFields: true,
+      });
+
+      const [user] = createdUsers;
+
+      // only because resend needs organization email domain which I don't have :(
+      await payload.verifyEmail({
+        collection: "users",
+        token: user._verificationToken!,
       });
 
       return { success: true, sentToEmail: email };

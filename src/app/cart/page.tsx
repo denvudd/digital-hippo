@@ -43,7 +43,7 @@ const Page: React.FC<PageProps> = ({}) => {
         <div className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
           <div
             className={cn("lg:col-span-7", {
-              "rounded-lg border-2 border-dashed border-zinc-200 p-12":
+              "rounded-lg border-2 border-dashed border-zinc-200 p-12 lg:col-span-full":
                 isMounted && items.length === 0,
             })}
           >
