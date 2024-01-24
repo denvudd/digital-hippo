@@ -1,10 +1,13 @@
 import React from "react";
 import Image from "next/image";
+
 import VerifyEmail from "@/components/VerifyEmail";
+
+import { type PageParam } from "@/types";
 
 interface PageProps {
   searchParams: {
-    [key: string]: string | string[] | undefined;
+    [key: string]: PageParam;
   };
 }
 

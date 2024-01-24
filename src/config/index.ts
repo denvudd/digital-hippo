@@ -26,17 +26,17 @@ export const PRODUCT_CATEGORIES: ProductCategories = [
     children: [
       {
         name: "Editor picks",
-        href: "#",
+        href: "/products?category=ui_kits",
         image: "/nav/ui-kits/mixed.jpg",
       },
       {
         name: "New Arrivals",
-        href: "#",
+        href: "/products?category=ui_kits&sort=desc",
         image: "/nav/ui-kits/blue.jpg",
       },
       {
         name: "Bestsellers",
-        href: "#",
+        href: "/products?category=ui_kits",
         image: "/nav/ui-kits/purple.jpg",
       },
     ],
@@ -47,17 +47,17 @@ export const PRODUCT_CATEGORIES: ProductCategories = [
     children: [
       {
         name: "Favorite Icon Picks",
-        href: "#",
+        href: "/products?category=icons",
         image: "/nav/icons/picks.jpg",
       },
       {
         name: "New Arrivals",
-        href: "#",
+        href: "/products?category=icons&sort=desc",
         image: "/nav/icons/new.jpg",
       },
       {
         name: "Bestselling Icons",
-        href: "#",
+        href: "/products?category=icons",
         image: "/nav/icons/bestsellers.jpg",
       },
     ],

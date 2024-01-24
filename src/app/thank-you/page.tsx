@@ -11,10 +11,11 @@ import { getServerSideUser } from "@/lib/payload-utils";
 import { formatPrice, getProductLabel } from "@/lib/utils";
 import { FEE } from "@/config";
 import { User, type Product, type ProductFile } from "@/payload-types";
+import { type PageParam } from "@/types";
 
 interface PageProps {
   searchParams: {
-    [key: string]: string | string[] | undefined;
+    [key: string]: PageParam;
   };
 }
 

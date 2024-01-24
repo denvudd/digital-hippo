@@ -7,6 +7,7 @@ import ProductListing from "./ProductListing";
 import { trpc } from "@/trpc/client";
 import { TProductsQueryValidator } from "@/lib/validators/query";
 import { type Product } from "@/payload-types";
+import Image from "next/image";
 
 interface ProductReelProps {
   title: string;
@@ -32,8 +33,8 @@ const ProductReel: React.FC<ProductReelProps> = (props) => {
     );
 
   const products = rawProducts?.pages.flatMap((page) => page.products);
-
   let mappedProducts: (Product | null)[] = [];
+
   if (products && products.length) {
     mappedProducts = products;
   } else if (isProductsLoading) {
@@ -67,9 +68,30 @@ const ProductReel: React.FC<ProductReelProps> = (props) => {
       <div className="relative">
         <div className="mt-6 flex items-center w-full">
           <div className="w-full grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8">
-            {mappedProducts.map((product, index) => (
-              <ProductListing key={index} product={product} index={index} />
-            ))}
+            {!!mappedProducts.length &&
+              mappedProducts.map((product, index) => (
+                <ProductListing key={index} product={product} index={index} />
+              ))}
+            {!mappedProducts.length && (
+              <div className="col-span-full">
+                <div className="flex h-full flex-col items-center justify-center space-y-1">
+                  <div
+                    aria-hidden
+                    className="relative mb-4 h-40 w-40 text-muted-foreground"
+                  >
+                    <Image
+                      src="/hippo-empty-cart.png"
+                      fill
+                      loading="eager"
+                      alt="Empty shopping cart Hippo"
+                    />
+                  </div>
+                  <p className="text-muted-foreground text-center">
+                    Whoops! Nothing to show here yet.
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
