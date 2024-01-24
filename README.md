@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# DigitalHippo - A Modern Fullstack E-Commerce Marketplace for Digital Products
 
-## Getting Started
+Built with the Next.js 14 App Router, tRPC, TypeScript, Payload & Tailwind
 
-First, run the development server:
+> [!WARNING]  
+> The application utilizes email sending and account verification through the Resend service. Unfortunately, the service only allows sending test emails, and for real emails, an organization's mail is required, which I do not have. The application has a fully prepared verification flow (all pages, logic, and registration). However, for minimal functionality, this was disabled, and the account is verified upon registration.
+
+![Project Image](https://github.com/denvudd/digital-hippo.github.io/blob/main/public/thumbnail.png)
+
+
+![Project Image](https://github.com/denvudd/digital-hippo.github.io/blob/main/public/thumbnail2.png)
+
+## Technology Stack
+- Next.js 14 (self-hosted using Express server)
+- Typescript
+- Tailwind CSS
+- Express (for self-hosting)
+- MongoDB & Mongoose
+- [tRPC](https://trpc.io/) (React Query + API Routes + Full TS support)
+- [Payload CMS](https://payloadcms.com/)
+- Nodemailer
+- Sender
+- Stripe
+- Zustand
+- Zod
+- React Hook Form
+- Railway App (for deployment)
+
+## Features
+
+- 🛠️ Complete marketplace built from scratch in Next.js 14
+- 💻 Landing page & product pages
+- 💳 Full admin dashboard
+- 🛍️ Users can purchase and sell their own products
+- 📱  Full responsive for all devices
+- 🛒 Locally persisted shopping cart
+- 💳 Payment checkout using Stripe
+- 🔑 Authentication and CRM system using Payload
+- 🖥️ Self-host Next.js (using Express server)
+- 🌟 Clean, modern UI using shadcn-ui
+- ✉️ Beautiful emails for signing up and after purchase using Nodemailer & Sender
+- ✅ Admins can verify products to ensure high quality
+- ⌨️ 100% written in TypeScript
+- 🎁 ...much more
+
+### 1. Fork and Clone the Repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  git clone https://github.com/denvudd/digital-hippo.github.io.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Change directory
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+cd ./digitalhippo
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### 3. Install dependencies
 
-## Learn More
+```sh
+yarn
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 4. Copy .env.example to .env
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```sh
+cp .env.example .env
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Note: Simply complete the fields in the .env file, and you're all set to begin!
 
-## Deploy on Vercel
+### 5. Run the build command
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```sh
+yarn build
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### 6. Run the development server
+
+```sh
+yarn dev
+```
+
+
+## Acknowledgements
+
+- [Josh tried coding](https://www.youtube.com/@joshtriedcoding) for best practices and new knowledges
